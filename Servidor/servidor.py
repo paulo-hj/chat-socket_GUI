@@ -1,5 +1,5 @@
 import socket
-
+import threading
 HOST = "127.0.0.1"
 PORT = 61565
 
@@ -39,6 +39,8 @@ def conexaoInicial():
         usuario = cliente.recv(2048).decode('ascii')
         usuarios.append(usuario)
         globalMensagens(f'{usuario} acabei de entrar no chat!'.encode('ascii'))
+        user_thread = threading.Thread(target=mensagensget,args=(cliente,))
+        user_thread.start()
     except:
         pass
 
