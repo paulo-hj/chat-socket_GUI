@@ -16,6 +16,20 @@ def globalMensagens(message):
     for client in clientes:
         client.send(message)
 
+def mensagensget(cliente):
+    while True:
+        try:
+            mensagemCliente = cliente.recv(2048).decode('ascii')
+            globalMensagens(f'{usuarios[clientes.index(cliente)]} :{mensagemCliente}'.encode('ascii'))
+        except:
+            saiuCliente = clientes.index(cliente)
+            cliente.close()
+            clientes.remove(clientes[saiuCliente])
+            chaveCliente = usuarios[saiuCliente]
+            print(f'{chaveCliente} deixou o chat...')
+            globalMensagens(f'{chaveCliente} nos deixou...'.encode('ascii'))
+            usuarios.remove(chaveCliente)
+
 def conexaoInicial():
     try:
         cliente, address = server.accept()
