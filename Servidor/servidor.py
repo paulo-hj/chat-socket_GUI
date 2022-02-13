@@ -12,13 +12,20 @@ print("Aguardando clientes...")
 clientes = []
 usuarios = []
 
+def globalMensagens(message):
+    for client in clientes:
+        client.send(message)
+
 def conexaoInicial():
-    while True:
+    try:
         cliente, address = server.accept()
         print(f"Nova conexão: {str(address)}")
         clientes.append(cliente)
         cliente.send('getUser'.encode('ascii'))
         usuario = cliente.recv(2048).decode('ascii')
         usuarios.append(usuario)
+        globalMensagens(f'{usuario} acabei de entrar no chat!'.encode('ascii'))
+    except:
+        pass
 
 conexaoInicial()
