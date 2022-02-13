@@ -11,3 +11,14 @@ print("Aguardando clientes...")
 
 clientes = []
 usuarios = []
+
+def conexaoInicial():
+    while True:
+        cliente, address = server.accept()
+        print(f"Nova conexão: {str(address)}")
+        clientes.append(cliente)
+        cliente.send('getUser'.encode('ascii'))
+        usuario = cliente.recv(2048).decode('ascii')
+        usuarios.append(usuario)
+
+conexaoInicial()
