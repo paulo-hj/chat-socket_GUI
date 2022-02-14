@@ -17,16 +17,17 @@ class Funcs():
             print(f'ERRO: Por favor, revise sua entrada: {ServerIP}:{PORT}')
 
     def recebeMensagem(self):
-        self.mensagem = self.client.recv(2048).decode('ascii')     
-        #self.lb_chat["text"] = "{}".format(str(self.mensagem))
-        #print(str(self.mensagem))
-        #self.lista_mensagens.append(self.mensagem)
-        if self.mensagem=='getUser':
-            #self.printar()
-            self.client.send(self.username.encode('ascii'))       
-        else:
-            print(self.mensagem)
+        while True:
+            self.mensagem = self.client.recv(2048).decode('ascii')     
             #self.lb_chat["text"] = "{}".format(str(self.mensagem))
+            #print(str(self.mensagem))
+            #self.lista_mensagens.append(self.mensagem)
+            if self.mensagem=='getUser':
+                #self.printar()
+                self.client.send(self.username.encode('ascii'))       
+            else:
+                print(self.mensagem)
+                #self.lb_chat["text"] = "{}".format(str(self.mensagem))
 
     def enviaMessage(self):
         self.mensagemChat = str(self.entrada_chat.get())
