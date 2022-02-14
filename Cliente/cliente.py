@@ -1,6 +1,5 @@
 from tkinter import *
 import socket
-import threading
 
 class Funcs():
     def conectar(self):
@@ -16,6 +15,11 @@ class Funcs():
             print(f'Conectado com sucesso a {ServerIP}:{PORT}')
         except:
             print(f'ERRO: Por favor, revise sua entrada: {ServerIP}:{PORT}')
+
+    def enviaMessage(self):
+        self.mensagemChat = str(self.entrada_chat.get())
+        self.client.send(self.mensagemChat.encode('ascii'))
+        self.entrada_chat.delete(0, END)
             
 class Aplicativo(Funcs):
     def __init__(self):
